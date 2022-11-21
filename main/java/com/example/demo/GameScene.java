@@ -64,8 +64,8 @@ class GameScene {
         if (random.nextInt() % 2 == 0)
             putTwo = false;
         int xCell, yCell;
-            xCell = random.nextInt(aForBound+1);
-            yCell = random.nextInt(bForBound+1);
+        xCell = random.nextInt(aForBound+1);
+        yCell = random.nextInt(bForBound+1);
         if (putTwo) {
             text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
@@ -79,7 +79,7 @@ class GameScene {
         }
     }
 
-    private int  haveEmptyCell() {
+    private int haveEmptyCell() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (cells[i][j].getNumber() == 0)
@@ -147,13 +147,14 @@ class GameScene {
     private int moveLeft() {
         int count = 0;
         for (int i = 0; i < n; i++) {
-            for (int j = 1; j < n; j++) {
+            for (int j = 0; j < n; j++) {
                 count += moveHorizontally(i, j, passDestination(i, j, 'l'), -1);
             }
             for (int j = 0; j < n; j++) {
                 cells[i][j].setModify(false);
             }
         }
+
         return count;
     }
 
@@ -174,7 +175,7 @@ class GameScene {
     private int moveUp() {
         int count = 0;
         for (int j = 0; j < n; j++) {
-            for (int i = 1; i < n; i++) {
+            for (int i = 0; i < n; i++) {
                 count += moveVertically(i, j, passDestination(i, j, 'u'), -1);
             }
             for (int i = 0; i < n; i++) {
@@ -200,8 +201,8 @@ class GameScene {
 
     private boolean isValidDesH(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0) {
-            if (cells[i][des + sign].getNumber() == cells[i][j].getNumber() && !cells[i][des + sign].getModify()
-                    && cells[i][des + sign].getNumber() != 0) {
+            if (cells[i][des + sign].getNumber() == cells[i][j].getNumber() && !cells[i][des + sign].getModify() && !cells[i][j].getModify()
+                    && cells[i][des + sign].getNumber() != 0 && cells[i][j].getNumber() != 0) {
                 return true;
             }
         }
@@ -212,7 +213,7 @@ class GameScene {
         if (isValidDesH(i, j, des, sign)) {
             score += cells[i][j].getNumber() + cells[i][des + sign].getNumber();
             cells[i][j].adder(cells[i][des + sign]);
-            cells[i][des].setModify(true);
+            cells[i][des + sign].setModify(true);
             return 1;
         } else if (des != j) {
             if (cells[i][j].getNumber() != 0) {
@@ -225,8 +226,8 @@ class GameScene {
 
     private boolean isValidDesV(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0)
-            if (cells[des + sign][j].getNumber() == cells[i][j].getNumber() && !cells[des + sign][j].getModify()
-                    && cells[des + sign][j].getNumber() != 0) {
+            if (cells[des + sign][j].getNumber() == cells[i][j].getNumber() && !cells[des + sign][j].getModify() && !cells[i][j].getModify()
+                    && cells[des + sign][j].getNumber() != 0  && cells[i][j].getNumber() != 0) {
                 return true;
             }
         return false;
@@ -236,7 +237,7 @@ class GameScene {
         if (isValidDesV(i, j, des, sign)) {
             score += cells[i][j].getNumber() + cells[des + sign][j].getNumber();
             cells[i][j].adder(cells[des + sign][j]);
-            cells[des][j].setModify(true);
+            cells[des + sign][j].setModify(true);
             return 1;
         } else if (des != i) {
             if (cells[i][j].getNumber() != 0) {
@@ -258,8 +259,8 @@ class GameScene {
     }
 
     private boolean canNotMove() {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1; j++) {
                 if (haveSameNumberNearly(i, j)) {
                     return false;
                 }
@@ -372,9 +373,7 @@ class GameScene {
                         }
                     }
                 }
-
             });
         });
     }
 }
-
