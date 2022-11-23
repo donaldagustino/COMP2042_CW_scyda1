@@ -36,8 +36,7 @@ class GameScene {
         return length;
     }
 
-    private void randomFillNumber(int turn) {
-
+    private void randomFillNumber() {
         Cell[][] emptyCells = new Cell[this.size][this.size];
         int a = 0;
         int b = 0;
@@ -85,13 +84,18 @@ class GameScene {
     }
 
     private int haveEmptyCell() {
+        int countSpace = 0;
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
                 if (cells[i][j].getNumber() == 0)
-                    return 1;
+                    countSpace++;
                 if (cells[i][j].getNumber() == 2048)
                     return 0;
             }
+        }
+
+        if (countSpace > 0) {
+            return 1;
         }
         return -1;
     }
@@ -307,24 +311,38 @@ class GameScene {
         scoreText.setFont(Font.font(20));
         scoreText.setText("0");
 
-        randomFillNumber(1);
-        randomFillNumber(1);
+        randomFillNumber();
+        randomFillNumber();
     }
 
     void update(int movementCount) {
         this.scoreText.setText(String.valueOf(currentScore));
         int emptyCell = this.haveEmptyCell();
+        System.out.println(emptyCell);
+        if (emptyCell == 0) {
+            primaryStage.setScene(endGameScene);
+
+            EndGame.getInstance().show(endGameScene, endGameRoot, primaryStage, currentScore, "YOU WIN");
+            this.gameRoot.getChildren().clear();
+            currentScore = 0;
+            return;
+        }
 
         if (emptyCell == -1) {
             if (this.canNotMove()) {
                 primaryStage.setScene(endGameScene);
 
-                EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, currentScore);
+                EndGame.getInstance().show(endGameScene, endGameRoot, primaryStage, currentScore, "GAME OVER");
                 this.gameRoot.getChildren().clear();
                 currentScore = 0;
             }
-        } else if (emptyCell == 1 && movementCount != 0) {
-            this.randomFillNumber(2);
+            return;
+        }
+
+        if (emptyCell == 1) {
+            if (movementCount != 0) {
+                this.randomFillNumber();
+            }
         }
     }
 
