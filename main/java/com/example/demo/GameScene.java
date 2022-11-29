@@ -24,6 +24,8 @@ class GameScene {
     private Group endGameRoot;
     private Stage primaryStage;
 
+    private EndGame endGame;
+
     private Text scoreText;
     private long currentScore = 0;
 
@@ -290,6 +292,9 @@ class GameScene {
 
         this.setSize(size);
         this.cells = new Cell[this.size][this.size];
+
+        this.endGame = EndGame.getInstance();
+        this.endGame.init(endGameScene, endGameRoot, primaryStage);
     }
 
     public void initialize() {
@@ -316,13 +321,14 @@ class GameScene {
     }
 
     void update(int movementCount) {
+
         this.scoreText.setText(String.valueOf(currentScore));
         int emptyCell = this.haveEmptyCell();
         System.out.println(emptyCell);
         if (emptyCell == 0) {
             primaryStage.setScene(endGameScene);
 
-            EndGame.getInstance().show(endGameScene, endGameRoot, primaryStage, currentScore, "YOU WIN");
+            this.endGame.show(currentScore, "YOU WIN");
             this.gameRoot.getChildren().clear();
             currentScore = 0;
             return;
@@ -332,7 +338,7 @@ class GameScene {
             if (this.canNotMove()) {
                 primaryStage.setScene(endGameScene);
 
-                EndGame.getInstance().show(endGameScene, endGameRoot, primaryStage, currentScore, "GAME OVER");
+                this.endGame.show(currentScore, "GAME OVER");
                 this.gameRoot.getChildren().clear();
                 currentScore = 0;
             }

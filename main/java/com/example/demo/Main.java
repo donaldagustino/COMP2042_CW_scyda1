@@ -62,10 +62,22 @@ public class Main extends Application {
         Group gameRoot = new Group();
         setGameRoot(gameRoot);
         Scene gameScene = new Scene(gameRoot, WIDTH, HEIGHT, Color.rgb(189, 177, 92));
-        setGameScene(gameScene);
-        primaryStage.setScene(gameScene);
-        GameScene game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endgameRoot, 4);
-        game.run();
+//        setGameScene(gameScene);
+//        primaryStage.setScene(gameScene);
+//        GameScene game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endgameRoot, 4);
+//        game.run();
+//
+//        primaryStage.show();
+
+        MainMenu mainMenu = MainMenu.getInstance();
+
+        System.out.println(mainMenu);
+
+        mainMenu.init(primaryStage);
+
+        mainMenu.setAsPrimaryStage();
+
+        mainMenu.show();
 
         primaryStage.show();
     }
