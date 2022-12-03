@@ -95,7 +95,7 @@ public class Cell {
                 rectangle.setFill(Color.rgb(250, 0, 44, 0.8));
                 break;
             case 2048:
-                rectangle.setFill(Color.rgb(250,0,0,1));
+                rectangle.setFill(Color.rgb(250, 0, 0, 1));
 
 
         }

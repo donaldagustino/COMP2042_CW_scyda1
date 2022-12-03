@@ -43,7 +43,6 @@ class TextMaker {
         tempNumber = first.getY();
         first.setY(second.getY());
         second.setY(tempNumber);
-
     }
 
 }

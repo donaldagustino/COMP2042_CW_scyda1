@@ -12,11 +12,11 @@ import java.util.Collections;
 
 public class Account implements Comparable<Account> {
     private long score = 0;
-    private String userName ;
+    private String userName;
     private static ArrayList<Account> accounts = new ArrayList<>();
 
-    public Account(String userName){
-        this.userName=userName;
+    public Account(String userName) {
+        this.userName = userName;
     }
 
     @Override
@@ -36,9 +36,9 @@ public class Account implements Comparable<Account> {
         return userName;
     }
 
-    static Account accountHaveBeenExist(String userName){
-        for(Account account : accounts){
-            if(account.getUserName().equals(userName)){
+    static Account accountHaveBeenExist(String userName) {
+        for (Account account : accounts) {
+            if (account.getUserName().equals(userName)) {
                 return account;
             }
         }
@@ -46,7 +46,7 @@ public class Account implements Comparable<Account> {
 
     }
 
-    static Account makeNewAccount(String userName){
+    static Account makeNewAccount(String userName) {
         Account account = new Account(userName);
         accounts.add(account);
         return account;
