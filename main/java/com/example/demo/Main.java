@@ -1,20 +1,14 @@
 package com.example.demo;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.ButtonType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 import javafx.scene.shape.Rectangle;
 
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Main extends Application {
@@ -34,6 +28,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        UserListAccount userListAccount = UserListAccount.getInstance();
+        userListAccount.getUserAccountsFromHighestScore();
 
         Group menuRoot = new Group();
         Scene menuScene = new Scene(menuRoot, WIDTH, HEIGHT);
@@ -59,26 +55,12 @@ public class Main extends Application {
         backgroundOfMenuForPlay.setY(180);
         accountRoot.getChildren().add(backgroundOfMenuForPlay);
 
-        Group gameRoot = new Group();
-        setGameRoot(gameRoot);
-        Scene gameScene = new Scene(gameRoot, WIDTH, HEIGHT, Color.rgb(189, 177, 92));
-//        setGameScene(gameScene);
-//        primaryStage.setScene(gameScene);
-//        GameScene game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endgameRoot, 4);
-//        game.run();
-//
-//        primaryStage.show();
-
         MainMenu mainMenu = MainMenu.getInstance();
-
-        System.out.println(mainMenu);
-
         mainMenu.init(primaryStage);
-
         mainMenu.setAsPrimaryStage();
-
         mainMenu.show();
 
+        primaryStage.setTitle("2048");
         primaryStage.show();
     }
 

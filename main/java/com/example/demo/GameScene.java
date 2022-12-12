@@ -355,6 +355,8 @@ class GameScene {
     void run() {
         this.initialize();
 
+        System.out.println(UserListAccount.getInstance().getCurrentUser());
+
         this.gameScene.addEventHandler(KeyEvent.KEY_PRESSED, key -> {
             Platform.runLater(() -> {
                 int movementCount = 0;

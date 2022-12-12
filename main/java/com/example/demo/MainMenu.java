@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,12 +15,8 @@ public class MainMenu {
     private static MainMenu mainMenu = null;
     private int width;
     private int height;
-
     private Group mainMenuRoot;
     private Scene mainMenuScene;
-
-    private RadioButton rb;
-
     private Stage primaryStage;
 
     public MainMenu() {
@@ -34,7 +29,8 @@ public class MainMenu {
 
     public static MainMenu getInstance() {
         if (mainMenu == null) {
-            return new MainMenu();
+            mainMenu = new MainMenu();
+            return mainMenu;
         }
 
         return mainMenu;
@@ -55,80 +51,55 @@ public class MainMenu {
         text.setFont(Font.font(80));
         text.setWrappingWidth(this.width);
         text.setTextAlignment(TextAlignment.CENTER);
-        text.setY(100);
+        text.setY(140);
         this.mainMenuRoot.getChildren().add(text);
 
-        int buttonWidth = 144;
+        int buttonWidth = 240;
         int buttonHeight = 32;
 
         int centerXButton = (this.width - buttonWidth) / 2;
 
-        Button accountGameButton = new Button("Account");
-        accountGameButton.setPrefSize(buttonWidth, buttonHeight);
-        accountGameButton.setTextFill(Color.BLACK);
-        accountGameButton.relocate(centerXButton, 150);
-        this.mainMenuRoot.getChildren().add(accountGameButton);
+        Button startAsUserButton = new Button("Start as User");
+        startAsUserButton.setPrefSize(buttonWidth, buttonHeight);
+        startAsUserButton.setTextFill(Color.BLACK);
+        startAsUserButton.relocate(centerXButton, 240);
+        this.mainMenuRoot.getChildren().add(startAsUserButton);
 
-        ToggleGroup radioGroup = new ToggleGroup();
+        Button startAsGuestButton = new Button("Start as Guest");
+        startAsGuestButton.setPrefSize(buttonWidth, buttonHeight);
+        startAsGuestButton.setTextFill(Color.BLACK);
+        startAsGuestButton.relocate(centerXButton, 300);
+        this.mainMenuRoot.getChildren().add(startAsGuestButton);
 
-        int radioWidth = 120;
-        int radioHeight = 32;
+        Button leaderboardButton = new Button("View Leaderboard");
+        leaderboardButton.setPrefSize(buttonWidth, buttonHeight);
+        leaderboardButton.setTextFill(Color.BLACK);
+        leaderboardButton.relocate(centerXButton, 360);
+        this.mainMenuRoot.getChildren().add(leaderboardButton);
 
-        int centerX = (this.width - radioWidth) / 2;
-
-        RadioButton r1 = new RadioButton("Easy  : 6 x 6");
-        r1.setMinSize(radioWidth, radioHeight);
-        r1.relocate(centerX, 200);
-        RadioButton r2 = new RadioButton("Medium: 5 x 5");
-        r2.setMinSize(radioWidth, radioHeight);
-        r2.relocate(centerX, 240);
-        RadioButton r3 = new RadioButton("Hard  : 4 x 4");
-        r3.setMinSize(radioWidth, radioHeight);
-        r3.relocate(centerX, 280);
-
-        r1.setToggleGroup(radioGroup);
-        r2.setToggleGroup(radioGroup);
-        r3.setToggleGroup(radioGroup);
-
-        r1.setSelected(true);
-
-        this.mainMenuRoot.getChildren().add(r1);
-        this.mainMenuRoot.getChildren().add(r2);
-        this.mainMenuRoot.getChildren().add(r3);
-
-        Button startGameButton = new Button("Start");
-        startGameButton.setPrefSize(buttonWidth, buttonHeight);
-        startGameButton.setTextFill(Color.BLACK);
-        startGameButton.relocate(centerXButton, 320);
-        this.mainMenuRoot.getChildren().add(startGameButton);
-
-        this.rb = (RadioButton)radioGroup.getSelectedToggle();
-
-        startGameButton.setOnMouseClicked(mouseEvent -> {
-            Group endGameRoot = new Group();
-            Scene endGameScene = new Scene(endGameRoot, 900, 900, Color.rgb(250, 20, 100, 0.2));
-            Group gameRoot = new Group();
-            Scene gameScene = new Scene(gameRoot, 900, 900, Color.rgb(189, 177, 92));
-            this.primaryStage.setScene(gameScene);
-            GameScene game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endGameRoot, 6);
-
-            if (this.rb.equals(r1)) {
-                game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endGameRoot, 6);
-            }
-
-            if (this.rb.equals(r2)) {
-                game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endGameRoot, 5);
-            }
-
-            if (this.rb.equals(r3)) {
-                game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endGameRoot, 4);
-            }
-
-            game.run();
+        startAsGuestButton.setOnMouseClicked(mouseEvent -> {
+            UserListAccount.getInstance().setCurrentUser(new UserAccount());
+            GameplayMenu gameplayMenu = GameplayMenu.getInstance();
+            gameplayMenu.init(this.primaryStage);
+            gameplayMenu.setAsPrimaryStage();
+            gameplayMenu.show();
+            this.primaryStage.show();
         });
 
-        radioGroup.selectedToggleProperty().addListener((observableValue, toggle, t1) -> {
-            this.rb = (RadioButton)radioGroup.getSelectedToggle();
+        startAsUserButton.setOnMouseClicked(mouseEvent -> {
+            CreateUserMenu createUserMenu = CreateUserMenu.getInstance();
+            createUserMenu.init(this.primaryStage);
+            createUserMenu.setAsPrimaryStage();
+            createUserMenu.show();
+            this.primaryStage.show();
+        });
+
+        leaderboardButton.setOnMouseClicked(mouseEvent -> {
+            LeaderBoard leaderBoard = LeaderBoard.getInstance();
+            leaderBoard.init(this.primaryStage);
+            leaderBoard.setAsPrimaryStage();
+            leaderBoard.show();
+            this.primaryStage.show();
         });
     }
 }

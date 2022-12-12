@@ -1,12 +1,10 @@
 package com.example.demo;
 
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -41,6 +39,10 @@ public class EndGame {
     }
 
     public void show(long score, String textPrompt) {
+        UserListAccount userListAccount = UserListAccount.getInstance();
+        userListAccount.getCurrentUser().setScore(score);
+        userListAccount.getCurrentUser().saveUserAccount();
+
         Text text = new Text(textPrompt);
         text.setWrappingWidth(this.width);
         text.setTextAlignment(TextAlignment.CENTER);
@@ -52,11 +54,11 @@ public class EndGame {
         scoreText.setFill(Color.BLACK);
         scoreText.setWrappingWidth(this.width);
         scoreText.setTextAlignment(TextAlignment.CENTER);
-        scoreText.setY(250);
-        scoreText.setFont(Font.font(80));
+        scoreText.setY(220);
+        scoreText.setFont(Font.font(40));
         this.endGameRoot.getChildren().add(scoreText);
 
-        int buttonWidth = 144;
+        int buttonWidth = 240;
         int buttonHeight = 32;
 
         int centerX = (this.width - buttonWidth) / 2;
@@ -65,13 +67,19 @@ public class EndGame {
         quitButton.setPrefSize(buttonWidth, buttonHeight);
         quitButton.setTextFill(Color.BLACK);
         this.endGameRoot.getChildren().add(quitButton);
-        quitButton.relocate(centerX, 400);
+        quitButton.relocate(centerX, 320);
 
         Button mainMenuButton = new Button("MAIN MENU");
         mainMenuButton.setPrefSize(buttonWidth, buttonHeight);
         mainMenuButton.setTextFill(Color.BLACK);
         this.endGameRoot.getChildren().add(mainMenuButton);
-        mainMenuButton.relocate(centerX, 500);
+        mainMenuButton.relocate(centerX, 380);
+
+        Button leaderBoardButton = new Button("VIEW LEADERBOARD");
+        leaderBoardButton.setPrefSize(buttonWidth, buttonHeight);
+        leaderBoardButton.setTextFill(Color.BLACK);
+        this.endGameRoot.getChildren().add(leaderBoardButton);
+        leaderBoardButton.relocate(centerX, 440);
 
         quitButton.setOnMouseClicked(mouseEvent -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -86,15 +94,20 @@ public class EndGame {
         });
 
         mainMenuButton.setOnMouseClicked(mouseEvent -> {
-            MainMenu mainMenu = MainMenu.getInstance();
+            GameplayMenu gameplayMenu = GameplayMenu.getInstance();
+            System.out.println(gameplayMenu);
+            gameplayMenu.init(primaryStage);
+            gameplayMenu.setAsPrimaryStage();
+            gameplayMenu.show();
+            this.primaryStage.show();
+        });
 
-            System.out.println(mainMenu);
-
-            mainMenu.init(primaryStage);
-
-            mainMenu.setAsPrimaryStage();
-
-            mainMenu.show();
+        leaderBoardButton.setOnMouseClicked(mouseEvent -> {
+            LeaderBoard leaderBoard = LeaderBoard.getInstance();
+            leaderBoard.init(this.primaryStage);
+            leaderBoard.setAsPrimaryStage();
+            leaderBoard.show();
+            this.primaryStage.show();
         });
     }
 }

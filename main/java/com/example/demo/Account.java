@@ -43,7 +43,6 @@ public class Account implements Comparable<Account> {
             }
         }
         return null;
-
     }
 
     static Account makeNewAccount(String userName) {
