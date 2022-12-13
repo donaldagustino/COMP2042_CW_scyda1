@@ -3,6 +3,7 @@ package com.example.demo;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
@@ -24,7 +25,7 @@ public class MainMenu {
         this.height = 600;
 
         this.mainMenuRoot = new Group();
-        this.mainMenuScene = new Scene(this.mainMenuRoot, this.width, this.height, Color.rgb(150, 20, 100, 0.2));
+        this.mainMenuScene = new Scene(this.mainMenuRoot, this.width, this.height, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
     }
 
     public static MainMenu getInstance() {
@@ -37,6 +38,7 @@ public class MainMenu {
     }
 
     public void init(Stage primaryStage) {
+        this.mainMenuScene.setFill(ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
         this.primaryStage = primaryStage;
     }
 
@@ -47,6 +49,8 @@ public class MainMenu {
     }
 
     public void show() {
+        ThemeController themeController = ThemeController.getInstance();
+
         Text text = new Text("2048");
         text.setFont(Font.font(80));
         text.setWrappingWidth(this.width);
@@ -59,23 +63,40 @@ public class MainMenu {
 
         int centerXButton = (this.width - buttonWidth) / 2;
 
-        Button startAsUserButton = new Button("Start as User");
+        Button startAsUserButton = new Button("START AS USER");
         startAsUserButton.setPrefSize(buttonWidth, buttonHeight);
         startAsUserButton.setTextFill(Color.BLACK);
         startAsUserButton.relocate(centerXButton, 240);
         this.mainMenuRoot.getChildren().add(startAsUserButton);
 
-        Button startAsGuestButton = new Button("Start as Guest");
+        Button startAsGuestButton = new Button("START AS GUEST");
         startAsGuestButton.setPrefSize(buttonWidth, buttonHeight);
         startAsGuestButton.setTextFill(Color.BLACK);
         startAsGuestButton.relocate(centerXButton, 300);
         this.mainMenuRoot.getChildren().add(startAsGuestButton);
 
-        Button leaderboardButton = new Button("View Leaderboard");
+        Button leaderboardButton = new Button("VIEW LEADERBOARD");
         leaderboardButton.setPrefSize(buttonWidth, buttonHeight);
         leaderboardButton.setTextFill(Color.BLACK);
         leaderboardButton.relocate(centerXButton, 360);
         this.mainMenuRoot.getChildren().add(leaderboardButton);
+
+        int comboBoxWidth = 240;
+        int comboBoxHeight = 32;
+
+        int centerX = (this.width - comboBoxWidth) / 2;
+
+        ComboBox comboBox = new ComboBox();
+
+        comboBox.getItems().add("BLUE OCEAN");
+        comboBox.getItems().add("RED NUANCE");
+
+        comboBox.setValue(themeController.getCurrentThemeName());
+
+        comboBox.setPrefSize(comboBoxWidth, comboBoxHeight);
+        comboBox.relocate(centerX, 460);
+
+        this.mainMenuRoot.getChildren().add(comboBox);
 
         startAsGuestButton.setOnMouseClicked(mouseEvent -> {
             UserListAccount.getInstance().setCurrentUser(new UserAccount());
@@ -100,6 +121,11 @@ public class MainMenu {
             leaderBoard.setAsPrimaryStage();
             leaderBoard.show();
             this.primaryStage.show();
+        });
+
+        comboBox.setOnAction(actionEvent -> {
+            themeController.setCurrentThemeByName(comboBox.getValue().toString());
+            this.mainMenuScene.setFill(themeController.getCurrentTheme().getBackgroundColor());
         });
     }
 }

@@ -20,12 +20,14 @@ public class GameplayMenu {
     private RadioButton rb;
     private Stage primaryStage;
 
+    private String mode;
+
     public GameplayMenu() {
         this.width = 900;
         this.height = 600;
 
         this.gameplayMenuRoot = new Group();
-        this.gameplayMenuScene = new Scene(this.gameplayMenuRoot, this.width, this.height, Color.rgb(250, 20, 100, 0.2));
+        this.gameplayMenuScene = new Scene(this.gameplayMenuRoot, this.width, this.height, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
     }
 
     public static GameplayMenu getInstance() {
@@ -37,7 +39,12 @@ public class GameplayMenu {
         return gameplayMenu;
     }
 
+    public String getMode() {
+        return this.mode;
+    }
+
     public void init(Stage primaryStage) {
+        this.gameplayMenuScene.setFill(ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
         this.primaryStage = primaryStage;
     }
 
@@ -105,9 +112,9 @@ public class GameplayMenu {
         startGameButton.setOnMouseClicked(mouseEvent -> {
             this.gameplayMenuRoot.getChildren().removeAll(username, text, r1, r2, r3, startGameButton);
             Group endGameRoot = new Group();
-            Scene endGameScene = new Scene(endGameRoot, 900, 900, Color.rgb(250, 20, 100, 0.2));
+            Scene endGameScene = new Scene(endGameRoot, 900, 900, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
             Group gameRoot = new Group();
-            Scene gameScene = new Scene(gameRoot, 900, 900, Color.rgb(189, 177, 92));
+            Scene gameScene = new Scene(gameRoot, 900, 900, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
             this.primaryStage.setScene(gameScene);
             GameScene game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endGameRoot, 6);
 
@@ -122,6 +129,8 @@ public class GameplayMenu {
             if (this.rb.equals(r3)) {
                 game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endGameRoot, 4);
             }
+
+            this.mode = rb.getText();
 
             game.run();
         });

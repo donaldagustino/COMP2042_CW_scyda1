@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,20 +23,35 @@ public class UserListAccount {
 
     public UserListAccount() {
         this.userAccounts = new ArrayList<UserAccount>();
-        try (Scanner scanner = new Scanner(new File("UserAccounts.txt"))) {
+        this.loadUserAccounts();
+    }
+
+    private void loadUserAccounts() {
+        this.userAccounts.clear();
+        File file = new File("UserAccounts.txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try {
+            Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 String lines = scanner.nextLine();
                 String words[] = lines.split(";");
-                UserAccount userAccount = new UserAccount(words[0], words[1], Integer.valueOf(words[2]));
+                UserAccount userAccount = new UserAccount(words[0], words[1], Integer.valueOf(words[2]), words[3]);
                 this.userAccounts.add(userAccount);
             }
             this.userAccounts.forEach(userAccount -> System.out.println(userAccount));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     public ArrayList<UserAccount> getUserAccountsFromHighestScore() {
+        this.loadUserAccounts();
         ArrayList<UserAccount> sortedUserAccounts = (ArrayList<UserAccount>)userAccounts.clone();
         Collections.sort(sortedUserAccounts);
 

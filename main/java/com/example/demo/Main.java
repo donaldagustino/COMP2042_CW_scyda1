@@ -31,6 +31,9 @@ public class Main extends Application {
         UserListAccount userListAccount = UserListAccount.getInstance();
         userListAccount.getUserAccountsFromHighestScore();
 
+        ThemeController themeController = ThemeController.getInstance();
+        themeController.setCurrentThemeByName("BLUE OCEAN");
+
         Group menuRoot = new Group();
         Scene menuScene = new Scene(menuRoot, WIDTH, HEIGHT);
         Group accountRoot = new Group();
@@ -43,7 +46,6 @@ public class Main extends Application {
         Scene rankScene = new Scene(rankRoot, WIDTH, HEIGHT, Color.rgb(250, 50, 120, 0.3));
         BackgroundFill backgroundFill = new BackgroundFill(Color.rgb(120, 100, 100), CornerRadii.EMPTY, Insets.EMPTY);
         Background background = new Background(backgroundFill);
-
 
         Rectangle backgroundOfMenu = new Rectangle(240, 120, Color.rgb(120, 120, 120, 0.2));
         backgroundOfMenu.setX(WIDTH / 2 - 120);

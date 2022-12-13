@@ -24,7 +24,7 @@ public class CreateUserMenu {
         this.height = 600;
 
         this.createUserRoot = new Group();
-        this.createUserScene = new Scene(this.createUserRoot, this.width, this.height, Color.rgb(150, 20, 100, 0.2));
+        this.createUserScene = new Scene(this.createUserRoot, this.width, this.height, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
     }
 
     public static CreateUserMenu getInstance() {
@@ -77,7 +77,7 @@ public class CreateUserMenu {
 
         int centerXButton = (this.width - buttonWidth) / 2;
 
-        Button createUserButton = new Button("Create User");
+        Button createUserButton = new Button("CREATE USER");
         createUserButton.setPrefSize(buttonWidth, buttonHeight);
         createUserButton.setTextFill(Color.BLACK);
         createUserButton.relocate(centerXButton, 340);

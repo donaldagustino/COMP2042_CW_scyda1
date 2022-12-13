@@ -1,9 +1,7 @@
 package com.example.demo;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Random;
@@ -13,17 +11,20 @@ public class UserAccount implements Comparable<UserAccount> {
     private String id;
     private String name;
     private long score;
+    private String mode;
 
-    public UserAccount(String id, String name, long score) {
+    public UserAccount(String id, String name, long score, String mode) {
         this.id = id;
         this.name = name;
         this.score = score;
+        this.mode = mode;
     }
 
     public UserAccount(String name, long score) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.score = score;
+        this.mode = "";
     }
 
     public UserAccount() {
@@ -59,8 +60,11 @@ public class UserAccount implements Comparable<UserAccount> {
         this.score = score;
     }
 
-    public void saveUserAccount() {
-        String text = String.format("%s;%s;%d\n", this.id, this.name, this.score);
+    public String getMode() { return this.mode; }
+
+    public void saveUserGameplay(String mode) {
+        this.mode = mode;
+        String text = String.format("%s;%s;%d;%s\n", this.id, this.name, this.score, this.mode);
         try {
             Files.write(Paths.get("UserAccounts.txt"), text.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
@@ -70,7 +74,7 @@ public class UserAccount implements Comparable<UserAccount> {
 
     @Override
     public String toString() {
-        return String.format("ID: %s\nName: %s\nScore: %d\n", this.id, this.name, this.score);
+        return String.format("ID: %s\nName: %s\nScore: %d\nMode: %s\n", this.id, this.name, this.score, this.mode);
     }
 
     @Override

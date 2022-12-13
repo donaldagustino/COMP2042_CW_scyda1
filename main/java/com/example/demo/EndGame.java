@@ -39,9 +39,11 @@ public class EndGame {
     }
 
     public void show(long score, String textPrompt) {
+        System.out.println(GameplayMenu.getInstance().getMode());
+
         UserListAccount userListAccount = UserListAccount.getInstance();
         userListAccount.getCurrentUser().setScore(score);
-        userListAccount.getCurrentUser().saveUserAccount();
+        userListAccount.getCurrentUser().saveUserGameplay(GameplayMenu.getInstance().getMode());
 
         Text text = new Text(textPrompt);
         text.setWrappingWidth(this.width);
