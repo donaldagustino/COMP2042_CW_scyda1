@@ -10,6 +10,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+/**
+ * Object of this class represent the menu of the application where the user can create an account by username
+ *
+ * @author  Donald Agustino
+ */
 public class CreateUserMenu {
     private static CreateUserMenu createUserMenu = null;
     private int width;

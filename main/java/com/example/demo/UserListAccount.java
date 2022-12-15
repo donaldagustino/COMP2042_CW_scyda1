@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+/**
+ * The object of this class is responsible to maintain the information of the current player (user) and store the
+ * user gameplay result to the text file.
+ *
+ * @author Donald Agustino
+ */
 public class UserListAccount {
     private ArrayList<UserAccount> userAccounts;
     private UserAccount currentUser = null;

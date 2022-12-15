@@ -13,7 +13,11 @@ import javafx.stage.Stage;
 
 import java.util.Optional;
 
-
+/**
+ * Object of this class represent the end game menu of the application
+ *
+ * @author Donald Agustino - modified
+ */
 public class EndGame {
 
     private int width;
@@ -90,7 +94,7 @@ public class EndGame {
             alert.setContentText("Are you sure?");
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
+                if (result.get() == ButtonType.OK) {
                 this.endGameRoot.getChildren().clear();
             }
         });

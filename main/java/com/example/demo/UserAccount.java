@@ -7,6 +7,12 @@ import java.nio.file.StandardOpenOption;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * The object of this class represent a single instance of the user account (player) which hold the details of
+ * a record of user account, score, and the level of the game that the user play.
+ *
+ * @author Donald Agustino
+ */
 public class UserAccount implements Comparable<UserAccount> {
     private String id;
     private String name;

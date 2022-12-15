@@ -11,6 +11,12 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+/**
+ * Object of this class represent the gameplay menu, a single menu that shows up which user can choose what level of
+ * the game that the user want to play.
+ *
+ * @author Donald Agustino
+ */
 public class GameplayMenu {
     private static GameplayMenu gameplayMenu = null;
     private int width;

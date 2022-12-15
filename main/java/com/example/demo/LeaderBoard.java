@@ -13,6 +13,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**
+ * Object of this class represent a leaderboard menu which show the history of the game played by the users.
+ *
+ * @author Donald Agustino
+ */
 public class LeaderBoard {
     private static LeaderBoard leaderBoard = null;
     private int width;

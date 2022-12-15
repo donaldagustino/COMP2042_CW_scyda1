@@ -3,6 +3,12 @@ package com.example.demo;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * This is the Main class of the application. This class is the one that will be executed first when starting
+ * the application.
+ *
+ * @author Donald Agustino - modified
+ */
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {

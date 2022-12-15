@@ -4,6 +4,11 @@ import javafx.scene.paint.Color;
 
 import java.util.HashMap;
 
+/**
+ * The object of this class is responsible to maintain and change the state of the application theme.
+ *
+ * @author Donald Agustino
+ */
 public class ThemeController {
     private static ThemeController themeController = null;
 

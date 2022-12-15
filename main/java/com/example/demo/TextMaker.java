@@ -5,16 +5,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-class TextMaker {
+
+/**
+ * The object of this class is responsible to create a javafx text object.
+ *
+ * @author  Donald Agustino - modified
+ */
+public class TextMaker {
     private static TextMaker singleInstance = null;
 
-    static TextMaker getSingleInstance() {
+    public static TextMaker getSingleInstance() {
         if (singleInstance == null)
             singleInstance = new TextMaker();
         return singleInstance;
     }
 
-    Text madeText(String input, double xCell, double yCell, Group root) {
+    public Text madeText(String input, double xCell, double yCell, Group root) {
         double length = GameScene.getLength();
         double fontSize = (2 * length) / 7.0;
         Text text = new Text(input);
@@ -25,7 +31,7 @@ class TextMaker {
         return text;
     }
 
-    static void changeTwoText(Text first, Text second) {
+    public static void changeTwoText(Text first, Text second) {
         String temp;
         temp = first.getText();
         first.setText(second.getText());

@@ -10,6 +10,13 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+/**
+ * The object of this class represent the main menu of the game. This main menu will be the one that shows up
+ * on the very first time the application is started.
+ *
+ * @author Donald Agustino
+ */
+
 public class MainMenu {
     private static MainMenu mainMenu = null;
     private int width;

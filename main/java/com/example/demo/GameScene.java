@@ -11,7 +11,12 @@ import javafx.stage.Stage;
 
 import java.util.Random;
 
-class GameScene {
+/**
+ * Object of this class represent the view of 2048 game and all the game logic of the 2048 game.
+ *
+ * @author Donald Agustino - modified
+ */
+public class GameScene {
     private static int height = 700;
     private static int size;
     private final static int distanceBetweenCells = 10;
@@ -29,12 +34,12 @@ class GameScene {
     private Text scoreText;
     private long currentScore = 0;
 
-    static void setSize(int number) {
+    public static void setSize(int number) {
         size = number;
         length = (height - ((size + 1) * distanceBetweenCells)) / (double) size;
     }
 
-    static double getLength() {
+    public static double getLength() {
         return length;
     }
 
@@ -320,7 +325,7 @@ class GameScene {
         randomFillNumber();
     }
 
-    void update(int movementCount) {
+    public void update(int movementCount) {
 
         this.scoreText.setText(String.valueOf(currentScore));
         int emptyCell = this.haveEmptyCell();
@@ -352,7 +357,7 @@ class GameScene {
         }
     }
 
-    void run() {
+    public void run() {
         this.initialize();
 
         System.out.println(UserListAccount.getInstance().getCurrentUser());
