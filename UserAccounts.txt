@@ -1,3 +1,4 @@
 1dfa5e53-ab09-4b47-9d35-98fa75bec18e;Gengar;820;Hard  : 4 x 4
 5b530861-103f-4990-8b9f-99e4cefb63a5;guest-469710;332;Medium: 5 x 5
 2bad1316-4934-4d64-bd75-f8e670ce5fbe;guest-262394;1072;Medium: 5 x 5
+f0c72703-998d-4112-b8bd-ff8238b9a547;guest-760152;1284;Hard  : 4 x 4

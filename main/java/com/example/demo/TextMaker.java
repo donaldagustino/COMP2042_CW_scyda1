@@ -8,10 +8,6 @@ import javafx.scene.text.Text;
 class TextMaker {
     private static TextMaker singleInstance = null;
 
-    private TextMaker() {
-
-    }
-
     static TextMaker getSingleInstance() {
         if (singleInstance == null)
             singleInstance = new TextMaker();
