@@ -20,4 +20,5 @@ Some features that are not able to be implemented due to time constraint are log
 
 New classes introduced in these piece of coursework are CreateUserMenu.java, GameplayMenu.java, LeaderBoard.java, MainMenu.java, Theme.java, ThemeController.java, UserAccount.javaa and UserListAccount.java
 
-Some java classes are also modified from the original given source code. Such mentioned classes are Account.java, Cell.java, EndGame.java, GameScene.java, Main.java and TextMake 
+Some java classes are also modified from the original given source code. Such mentioned classes are Account.java, Cell.java, EndGame.java, GameScene.java, Main.java and TextMaker.java
+
