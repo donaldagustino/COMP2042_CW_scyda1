@@ -28,7 +28,7 @@ public class ThemeController {
 
         themes[0] = new Theme();
         themes[0].setBackgroundColor(Color.rgb(0, 222, 255));
-        themes[0].addCellColorMap(0, Color.rgb(0, 209, 255, 0.5));
+        themes[0].addCellColorMap(0, Color.rgb(255, 255, 255, 0.5));
         themes[0].addCellColorMap(2, Color.rgb(0, 195, 255));
         themes[0].addCellColorMap(4, Color.rgb(0, 181, 255));
         themes[0].addCellColorMap(8, Color.rgb(0, 165, 255));
