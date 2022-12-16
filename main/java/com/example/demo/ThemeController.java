@@ -18,6 +18,10 @@ public class ThemeController {
 
     private String currentThemeName;
 
+    /**
+     * To initialize the ThemeController singleton.
+     * @return the ThemeController class singleton object.
+     */
     public static ThemeController getInstance() {
         if (themeController == null) {
             themeController = new ThemeController();
@@ -26,6 +30,9 @@ public class ThemeController {
         return themeController;
     }
 
+    /**
+     * Constructor of ThemeController class
+     */
     public ThemeController() {
         this.theme = new HashMap<String, Theme>();
 
@@ -66,16 +73,33 @@ public class ThemeController {
         theme.put("RED NUANCE", themes[1]);
     }
 
+    /**
+     * Get the theme (background color and cell color map) based on the theme name
+     * @param name a string of the theme name
+     * @return a Theme class object based on the name
+     */
     public Theme getThemeByName(String name) {
         return this.theme.get(name);
     }
 
+    /**
+     * Set current active theme of the application by name
+     * @param name a string of the theme name that will be set as the active theme on the application
+     */
     public void setCurrentThemeByName(String name) {
         this.currentThemeName = name;
         this.currentTheme = this.theme.get(name);
     }
 
+    /**
+     * Get current active theme
+     * @return a Theme class instance of the active theme
+     */
     public Theme getCurrentTheme() { return this.currentTheme; }
 
+    /**
+     * Get the name of the current active theme
+     * @return a string, name of the current active theme
+     */
     public String getCurrentThemeName() { return this.currentThemeName; };
 }

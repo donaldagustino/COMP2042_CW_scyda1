@@ -16,24 +16,32 @@ import java.util.Optional;
 /**
  * Object of this class represent the end game menu of the application
  *
- * @author Donald Agustino - modified
+ * @author Donald Agustino-modified
  */
 public class EndGame {
-
     private int width;
     private int height;
-    private static EndGame singleInstance = null;
-
+    private static EndGame endGame = null;
     private Scene endGameScene;
     private Group endGameRoot;
     private Stage primaryStage;
 
+    /**
+     * To initialize the EndGame singleton.
+     * @return instantiated singleton object of the EndGame class.
+     */
     public static EndGame getInstance() {
-        if (singleInstance == null)
-            singleInstance = new EndGame();
-        return singleInstance;
+        if (endGame == null)
+            endGame = new EndGame();
+        return endGame;
     }
 
+    /**
+     * Initialize the EndGame display
+     * @param endGameScene
+     * @param endGameRoot
+     * @param primaryStage
+     */
     public void init(Scene endGameScene, Group endGameRoot, Stage primaryStage) {
         this.width = 900;
         this.height = 600;
@@ -42,6 +50,32 @@ public class EndGame {
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Get GameplayMenu instance show the GameplayMenu scene
+     */
+    public void showGameplayMenu() {
+        GameplayMenu gameplayMenu = GameplayMenu.getInstance();
+        System.out.println(gameplayMenu);
+        gameplayMenu.init(primaryStage);
+        gameplayMenu.setAsPrimaryStage();
+        gameplayMenu.show();
+        this.primaryStage.show();
+    }
+
+    /**
+     * Get Leaderboard instance show the Leaderboard scene
+     */
+    public void showLeaderboard() {
+        LeaderBoard leaderBoard = LeaderBoard.getInstance();
+        leaderBoard.init(this.primaryStage);
+        leaderBoard.setAsPrimaryStage();
+        leaderBoard.show();
+        this.primaryStage.show();
+    }
+
+    /**
+     * Show the display of the EndGame page.
+     */
     public void show(long score, String textPrompt) {
         System.out.println(GameplayMenu.getInstance().getMode());
 
@@ -100,20 +134,11 @@ public class EndGame {
         });
 
         mainMenuButton.setOnMouseClicked(mouseEvent -> {
-            GameplayMenu gameplayMenu = GameplayMenu.getInstance();
-            System.out.println(gameplayMenu);
-            gameplayMenu.init(primaryStage);
-            gameplayMenu.setAsPrimaryStage();
-            gameplayMenu.show();
-            this.primaryStage.show();
+            this.showGameplayMenu();
         });
 
         leaderBoardButton.setOnMouseClicked(mouseEvent -> {
-            LeaderBoard leaderBoard = LeaderBoard.getInstance();
-            leaderBoard.init(this.primaryStage);
-            leaderBoard.setAsPrimaryStage();
-            leaderBoard.show();
-            this.primaryStage.show();
+            this.showLeaderboard();
         });
     }
 }

@@ -8,7 +8,7 @@ import javafx.scene.text.Text;
 /**
  * Object of this class represent a Cell of 2048 boards number
  *
- * @author  Donald Agustino - modified
+ * @author  Donald Agustino-modified
  */
 public class Cell {
     private Rectangle rectangle;
@@ -32,7 +32,7 @@ public class Cell {
         rectangle.setWidth(scale);
         this.root = root;
         rectangle.setFill(ThemeController.getInstance().getCurrentTheme().getCellColorMap().get(0));
-        this.textClass = TextMaker.getSingleInstance().madeText("0", x, y, root);
+        this.textClass = TextMaker.getInstance().madeText("0", x, y, root);
         root.getChildren().add(rectangle);
     }
 

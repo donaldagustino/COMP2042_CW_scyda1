@@ -25,6 +25,9 @@ public class MainMenu {
     private Scene mainMenuScene;
     private Stage primaryStage;
 
+    /**
+     * Constructor of MainMenu class
+     */
     public MainMenu() {
         this.width = 900;
         this.height = 600;
@@ -33,6 +36,10 @@ public class MainMenu {
         this.mainMenuScene = new Scene(this.mainMenuRoot, this.width, this.height, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
     }
 
+    /**
+     * To initialize the MainMenu singleton.
+     * @return instantiated singleton object of the MainMenu class.
+     */
     public static MainMenu getInstance() {
         if (mainMenu == null) {
             mainMenu = new MainMenu();
@@ -42,17 +49,60 @@ public class MainMenu {
         return mainMenu;
     }
 
+    /**
+     * Initialize the primaryStage.
+     * @param primaryStage a javaFX Stage class object.
+     */
     public void init(Stage primaryStage) {
         this.mainMenuScene.setFill(ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Set mainMenuScene as the scene that is shown on primaryStage.
+     */
     public void setAsPrimaryStage() {
         if (this.primaryStage != null) {
             this.primaryStage.setScene(this.mainMenuScene);
         }
     }
 
+    /**
+     * Get GameplayMenu instance show the GameplayMenu scene
+     */
+    public void showGameplayMenu() {
+        GameplayMenu gameplayMenu = GameplayMenu.getInstance();
+        gameplayMenu.init(this.primaryStage);
+        gameplayMenu.setAsPrimaryStage();
+        gameplayMenu.show();
+        this.primaryStage.show();
+    }
+
+    /**
+     * Get CreateUserMenu instance show the CreateUserMenu scene
+     */
+    public void showCreateUserMenu() {
+        CreateUserMenu createUserMenu = CreateUserMenu.getInstance();
+        createUserMenu.init(this.primaryStage);
+        createUserMenu.setAsPrimaryStage();
+        createUserMenu.show();
+        this.primaryStage.show();
+    }
+
+    /**
+     * Get Leaderboard instance show the Leaderboard scene
+     */
+    public void showLeaderboard() {
+        LeaderBoard leaderBoard = LeaderBoard.getInstance();
+        leaderBoard.init(this.primaryStage);
+        leaderBoard.setAsPrimaryStage();
+        leaderBoard.show();
+        this.primaryStage.show();
+    }
+
+    /**
+     * Show the display of the MainMenu page.
+     */
     public void show() {
         ThemeController themeController = ThemeController.getInstance();
 
@@ -105,27 +155,15 @@ public class MainMenu {
 
         startAsGuestButton.setOnMouseClicked(mouseEvent -> {
             UserListAccount.getInstance().setCurrentUser(new UserAccount());
-            GameplayMenu gameplayMenu = GameplayMenu.getInstance();
-            gameplayMenu.init(this.primaryStage);
-            gameplayMenu.setAsPrimaryStage();
-            gameplayMenu.show();
-            this.primaryStage.show();
+            this.showGameplayMenu();
         });
 
         startAsUserButton.setOnMouseClicked(mouseEvent -> {
-            CreateUserMenu createUserMenu = CreateUserMenu.getInstance();
-            createUserMenu.init(this.primaryStage);
-            createUserMenu.setAsPrimaryStage();
-            createUserMenu.show();
-            this.primaryStage.show();
+            this.showCreateUserMenu();
         });
 
         leaderboardButton.setOnMouseClicked(mouseEvent -> {
-            LeaderBoard leaderBoard = LeaderBoard.getInstance();
-            leaderBoard.init(this.primaryStage);
-            leaderBoard.setAsPrimaryStage();
-            leaderBoard.show();
-            this.primaryStage.show();
+            this.showLeaderboard();
         });
 
         comboBox.setOnAction(actionEvent -> {

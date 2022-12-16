@@ -18,6 +18,10 @@ public class UserListAccount {
     private UserAccount currentUser = null;
     private static UserListAccount userListAccount = null;
 
+    /**
+     * To initialize the UserListAccount singleton.
+     * @return the UserListAccount class singleton object.
+     */
     public static UserListAccount getInstance() {
         if (userListAccount == null) {
             userListAccount = new UserListAccount();
@@ -26,11 +30,17 @@ public class UserListAccount {
         return userListAccount;
     }
 
+    /**
+     * Constructor of UserListAccount
+     */
     public UserListAccount() {
         this.userAccounts = new ArrayList<UserAccount>();
         this.loadUserAccounts();
     }
 
+    /**
+     * Load user account from the text file
+     */
     private void loadUserAccounts() {
         this.userAccounts.clear();
         File file = new File("UserAccounts.txt");
@@ -55,6 +65,10 @@ public class UserListAccount {
         }
     }
 
+    /**
+     * Sort user account by the score (descending)
+     * @return a ArrayList of UserAccount sorted based on the score
+     */
     public ArrayList<UserAccount> getUserAccountsFromHighestScore() {
         this.loadUserAccounts();
         ArrayList<UserAccount> sortedUserAccounts = (ArrayList<UserAccount>)userAccounts.clone();
@@ -64,10 +78,18 @@ public class UserListAccount {
         return sortedUserAccounts;
     }
 
+    /**
+     * Set current active user
+     * @param user a UserAccount instance that will be set as the active user
+     */
     public void setCurrentUser(UserAccount user) {
         this.currentUser = user;
     }
 
+    /**
+     * Get the current active user account
+     * @return a UserAccount instance
+     */
     public UserAccount getCurrentUser() {
         return this.currentUser;
     }

@@ -26,6 +26,9 @@ public class LeaderBoard {
     private Scene leaderBoardScene;
     private Stage primaryStage;
 
+    /**
+     * Constructor of LeaderBoard class
+     */
     public LeaderBoard() {
         this.width = 900;
         this.height = 600;
@@ -34,6 +37,10 @@ public class LeaderBoard {
         this.leaderBoardScene = new Scene(this.leaderBoardRoot, this.width, this.height, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
     }
 
+    /**
+     * To initialize the LeaderBoard singleton.
+     * @return instantiated singleton object of the LeaderBoard class.
+     */
     public static LeaderBoard getInstance() {
         if (leaderBoard == null) {
             leaderBoard = new LeaderBoard();
@@ -43,17 +50,37 @@ public class LeaderBoard {
         return leaderBoard;
     }
 
+    /**
+     * Initialize the primaryStage.
+     * @param primaryStage a javaFX Stage class object.
+     */
     public void init(Stage primaryStage) {
         this.leaderBoardScene.setFill(ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Set leaderBoardScene as the scene that is shown on primaryStage.
+     */
     public void setAsPrimaryStage() {
         if (this.primaryStage != null) {
             this.primaryStage.setScene(this.leaderBoardScene);
         }
     }
 
+    /**
+     * Get MainMenu instance show the MainMenu scene
+     */
+    public void showMainMenu() {
+        MainMenu mainMenu = MainMenu.getInstance();
+        mainMenu.init(primaryStage);
+        mainMenu.setAsPrimaryStage();
+        mainMenu.show();
+    }
+
+    /**
+     * Show the display of the Leaderboard page.
+     */
     public void show() {
         ObservableList<UserAccount> userAccountList = FXCollections.observableArrayList(UserListAccount.getInstance().getUserAccountsFromHighestScore());
 
@@ -111,10 +138,7 @@ public class LeaderBoard {
         this.leaderBoardRoot.getChildren().add(backButton);
 
         backButton.setOnMouseClicked(mouseEvent -> {
-            MainMenu mainMenu = MainMenu.getInstance();
-            mainMenu.init(primaryStage);
-            mainMenu.setAsPrimaryStage();
-            mainMenu.show();
+            this.showMainMenu();
         });
 
         comboBox.setOnAction(actionEvent -> {

@@ -14,14 +14,14 @@ import java.util.Random;
 /**
  * Object of this class represent the view of 2048 game and all the game logic of the 2048 game.
  *
- * @author Donald Agustino - modified
+ * @author Donald Agustino-modified
  */
 public class GameScene {
     private static int height = 700;
     private static int size;
     private final static int distanceBetweenCells = 10;
     private static double length;
-    private TextMaker textMaker = TextMaker.getSingleInstance();
+    private TextMaker textMaker = TextMaker.getInstance();
     private Cell[][] cells;
     private Group gameRoot;
     private Scene gameScene;
@@ -34,15 +34,26 @@ public class GameScene {
     private Text scoreText;
     private long currentScore = 0;
 
+    /**
+     * Set the size and the length of the cell
+     * @param number an integer represent size of the application view
+     */
     public static void setSize(int number) {
         size = number;
         length = (height - ((size + 1) * distanceBetweenCells)) / (double) size;
     }
 
+    /**
+     * Get the length size
+     * @return a length which is used to set the size.
+     */
     public static double getLength() {
         return length;
     }
 
+    /**
+     * Generating random cell of value 2 or 4 in spaces with no cells.
+     */
     private void randomFillNumber() {
         Cell[][] emptyCells = new Cell[this.size][this.size];
         int a = 0;
@@ -90,6 +101,10 @@ public class GameScene {
         }
     }
 
+    /**
+     * Defining the win, lose, or ongoing cycle of the game
+     * @return an integer which determine the cycle of the game
+     */
     private int haveEmptyCell() {
         int countSpace = 0;
         for (int i = 0; i < this.size; i++) {
@@ -107,6 +122,13 @@ public class GameScene {
         return -1;
     }
 
+    /**
+     * Control the logic of the cell, and it's value based on the movement direction
+     * @param i an integer of the row of the cell that will be moved
+     * @param j an integer of the column of the cell that will be moved
+     * @param direct a character determine the direction of the cell movement
+     * @return an integer represent the destination coordinate of the cell based on the current board state
+     */
     private int passDestination(int i, int j, char direct) {
         int coordinate = j;
         if (direct == 'l') {
@@ -160,6 +182,10 @@ public class GameScene {
         return -1;
     }
 
+    /**
+     * Function to move the cell of the board to the left direction
+     * @return an integer to count how many changes happened on the board when move to left
+     */
     private int moveLeft() {
         int count = 0;
         for (int i = 0; i < this.size; i++) {
@@ -174,6 +200,10 @@ public class GameScene {
         return count;
     }
 
+    /**
+     * Function to move the cell of the board to the right direction
+     * @return an integer to count how many changes happened on the board when move to right
+     */
     private int moveRight() {
         int count = 0;
         for (int i = 0; i < this.size; i++) {
@@ -188,6 +218,10 @@ public class GameScene {
         return count;
     }
 
+    /**
+     * Function to move the cell of the board to the up direction
+     * @return an integer to count how many changes happened on the board when move to up
+     */
     private int moveUp() {
         int count = 0;
         for (int j = 0; j < this.size; j++) {
@@ -201,6 +235,10 @@ public class GameScene {
         return count;
     }
 
+    /**
+     * Function to move the cell of the board to the down direction
+     * @return an integer to count how many changes happened on the board when move to down
+     */
     private int moveDown() {
         int count = 0;
         for (int j = 0; j < this.size; j++) {
@@ -215,6 +253,14 @@ public class GameScene {
         return count;
     }
 
+    /**
+     * Check whether horizontal movement of the cell is valid
+     * @param i an integer of the row of the cell that will be moved
+     * @param j an integer of the column of the cell that will be moved
+     * @param des an integer on which destination index that the cell will be moved
+     * @param sign an integer, positive or negative value
+     * @return a boolean to determine whether the horizontal movement is valid or not
+     */
     private boolean isValidDesH(int i, int j, int des, int sign) {
         if (des + sign < this.size && des + sign >= 0) {
             if (cells[i][des + sign].getNumber() == cells[i][j].getNumber() && !cells[i][des + sign].getModify() && !cells[i][j].getModify()
@@ -225,6 +271,14 @@ public class GameScene {
         return false;
     }
 
+    /**
+     * Move the cell horizontally, merge the cell when encounter the same cell number, or simply just move to the blank cell
+     * @param i an integer of the row of the cell that will be moved
+     * @param j an integer of the column of the cell that will be moved
+     * @param des an integer on which destination index that the cell will be moved
+     * @param sign an integer, positive or negative value
+     * @return an integer determine whether movement happened or not
+     */
     private int moveHorizontally(int i, int j, int des, int sign) {
         if (isValidDesH(i, j, des, sign)) {
             currentScore += cells[i][j].getNumber() + cells[i][des + sign].getNumber();
@@ -240,6 +294,14 @@ public class GameScene {
         return 0;
     }
 
+    /**
+     * Check whether vertical movement of the cell is valid
+     * @param i an integer of the row of the cell that will be moved
+     * @param j an integer of the column of the cell that will be moved
+     * @param des an integer on which destination index that the cell will be moved
+     * @param sign an integer, positive or negative value
+     * @return a boolean to determine whether the vertical movement is valid or not
+     */
     private boolean isValidDesV(int i, int j, int des, int sign) {
         if (des + sign < this.size && des + sign >= 0)
             if (cells[des + sign][j].getNumber() == cells[i][j].getNumber() && !cells[des + sign][j].getModify() && !cells[i][j].getModify()
@@ -249,6 +311,14 @@ public class GameScene {
         return false;
     }
 
+    /**
+     * Move the cell vertically, merge the cell when encounter the same cell number, or simply just move to the blank cell
+     * @param i an integer of the row of the cell that will be moved
+     * @param j an integer of the column of the cell that will be moved
+     * @param des an integer on which destination index that the cell will be moved
+     * @param sign an integer, positive or negative value
+     * @return an integer determine whether movement happened or not
+     */
     private int moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
             currentScore += cells[i][j].getNumber() + cells[des + sign][j].getNumber();
@@ -264,6 +334,12 @@ public class GameScene {
         return 0;
     }
 
+    /**
+     * Check whether there is adjacent cell that has the same value or not
+     * @param i an integer of the row of the cell that will be moved
+     * @param j an integer of the column of the cell that will be moved
+     * @return a boolean determine whether there are adjacent cell that has the same value
+     */
     private boolean haveSameNumberNearly(int i, int j) {
         if (i < this.size - 1 && j < this.size - 1) {
             if (cells[i + 1][j].getNumber() == cells[i][j].getNumber())
@@ -274,6 +350,10 @@ public class GameScene {
         return false;
     }
 
+    /**
+     * A function to know whether is there any movement left on the board
+     * @return a boolean, true if there are still possible movement, false if none of the movement can be done
+     */
     private boolean canNotMove() {
         for (int i = 0; i < this.size - 1; i++) {
             for (int j = 0; j < this.size - 1; j++) {
@@ -285,7 +365,9 @@ public class GameScene {
         return true;
     }
 
-    // GameScene constructor to inject all the dependencies needed in this class from the Main class.
+    /**
+     * GameScene constructor to inject all the dependencies needed in this class from the Main class.
+     */
     public GameScene(Scene gameScene, Group gameRoot, Stage primaryStage, Scene endGameScene, Group endGameRoot, int size) {
         this.gameRoot = gameRoot;
         this.gameScene = gameScene;
@@ -302,6 +384,9 @@ public class GameScene {
         this.endGame.init(endGameScene, endGameRoot, primaryStage);
     }
 
+    /**
+     * Initialize the board and the cells view on the scene
+     */
     public void initialize() {
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
@@ -325,11 +410,14 @@ public class GameScene {
         randomFillNumber();
     }
 
+    /**
+     * Update the current game state, evaluating the board condition
+     * @param movementCount an integer represent how many movement happened based on the movement that the user input
+     */
     public void update(int movementCount) {
 
         this.scoreText.setText(String.valueOf(currentScore));
         int emptyCell = this.haveEmptyCell();
-        System.out.println(emptyCell);
         if (emptyCell == 0) {
             primaryStage.setScene(endGameScene);
 
@@ -357,6 +445,9 @@ public class GameScene {
         }
     }
 
+    /**
+     * Run the whole GameScene process from initialization, update, and stop state
+     */
     public void run() {
         this.initialize();
 

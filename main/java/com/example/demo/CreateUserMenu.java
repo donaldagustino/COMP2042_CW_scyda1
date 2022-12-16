@@ -23,6 +23,9 @@ public class CreateUserMenu {
     private Scene createUserScene;
     private Stage primaryStage;
 
+    /**
+     * Constructor of CreateUserMenu
+     */
     public CreateUserMenu() {
         this.width = 900;
         this.height = 600;
@@ -31,6 +34,10 @@ public class CreateUserMenu {
         this.createUserScene = new Scene(this.createUserRoot, this.width, this.height, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
     }
 
+    /**
+     * To initialize the CreateUserMenu singleton.
+     * @return the CreateUserMenu class singleton object.
+     */
     public static CreateUserMenu getInstance() {
         if (createUserMenu == null) {
             createUserMenu = new CreateUserMenu();
@@ -40,16 +47,37 @@ public class CreateUserMenu {
         return createUserMenu;
     }
 
+    /**
+     * Initialize the primaryStage.
+     * @param primaryStage a javaFX Stage class object.
+     */
     public void init(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Set createUserScene as the scene that is shown on primaryStage.
+     */
     public void setAsPrimaryStage() {
         if (this.primaryStage != null) {
             this.primaryStage.setScene(this.createUserScene);
         }
     }
 
+    /**
+     * Get GameplayMenu instance show the GameplayMenu scene
+     */
+    public void showGameplayMenu() {
+        GameplayMenu gameplayMenu = GameplayMenu.getInstance();
+        gameplayMenu.init(this.primaryStage);
+        gameplayMenu.setAsPrimaryStage();
+        gameplayMenu.show();
+        this.primaryStage.show();
+    }
+
+    /**
+     * Show the display of the CreateUserMenu page.
+     */
     public void show() {
         Text text = new Text("2048");
         text.setFont(Font.font(80));
@@ -93,11 +121,7 @@ public class CreateUserMenu {
             } else {
                 String name = textField.getText();
                 UserListAccount.getInstance().setCurrentUser(new UserAccount(name, 0));
-                GameplayMenu gameplayMenu = GameplayMenu.getInstance();
-                gameplayMenu.init(this.primaryStage);
-                gameplayMenu.setAsPrimaryStage();
-                gameplayMenu.show();
-                this.primaryStage.show();
+                this.showGameplayMenu();
             }
         });
     }

@@ -28,6 +28,9 @@ public class GameplayMenu {
 
     private String mode;
 
+    /**
+     * Constructor of GameplayMenu class
+     */
     public GameplayMenu() {
         this.width = 900;
         this.height = 600;
@@ -36,6 +39,10 @@ public class GameplayMenu {
         this.gameplayMenuScene = new Scene(this.gameplayMenuRoot, this.width, this.height, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
     }
 
+    /**
+     * To initialize the GameplayMenu singleton.
+     * @return instantiated singleton object of the GameplayMenu class.
+     */
     public static GameplayMenu getInstance() {
         if (gameplayMenu == null) {
             gameplayMenu = new GameplayMenu();
@@ -45,21 +52,51 @@ public class GameplayMenu {
         return gameplayMenu;
     }
 
+    /**
+     * Get the game mode difficulty.
+     * @return a string which represent the mode of the game.
+     */
     public String getMode() {
         return this.mode;
     }
 
+    /**
+     * Initialize the primaryStage.
+     * @param primaryStage a javaFX Stage class object.
+     */
     public void init(Stage primaryStage) {
         this.gameplayMenuScene.setFill(ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Set gameplayMenuScene as the scene that is shown on primaryStage.
+     */
     public void setAsPrimaryStage() {
         if (this.primaryStage != null) {
             this.primaryStage.setScene(this.gameplayMenuScene);
         }
     }
 
+    /**
+     * Initialize GameScene instance and show as the primary stage
+     */
+    public void showGameScene(int size) {
+        Group endGameRoot = new Group();
+        Scene endGameScene = new Scene(endGameRoot, 900, 900, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
+        Group gameRoot = new Group();
+        Scene gameScene = new Scene(gameRoot, 900, 900, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
+        this.primaryStage.setScene(gameScene);
+        GameScene game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endGameRoot, size);
+
+        this.mode = rb.getText();
+
+        game.run();
+    }
+
+    /**
+     * Show the display of the GameplayMenu page.
+     */
     public void show() {
         Text username = new Text("Welcome, " + UserListAccount.getInstance().getCurrentUser().getName());
         username.setFont(Font.font(18));
@@ -117,28 +154,18 @@ public class GameplayMenu {
 
         startGameButton.setOnMouseClicked(mouseEvent -> {
             this.gameplayMenuRoot.getChildren().removeAll(username, text, r1, r2, r3, startGameButton);
-            Group endGameRoot = new Group();
-            Scene endGameScene = new Scene(endGameRoot, 900, 900, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
-            Group gameRoot = new Group();
-            Scene gameScene = new Scene(gameRoot, 900, 900, ThemeController.getInstance().getCurrentTheme().getBackgroundColor());
-            this.primaryStage.setScene(gameScene);
-            GameScene game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endGameRoot, 6);
 
             if (this.rb.equals(r1)) {
-                game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endGameRoot, 6);
+                this.showGameScene(6);
             }
 
             if (this.rb.equals(r2)) {
-                game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endGameRoot, 5);
+                this.showGameScene(5);
             }
 
             if (this.rb.equals(r3)) {
-                game = new GameScene(gameScene, gameRoot, primaryStage, endGameScene, endGameRoot, 4);
+                this.showGameScene(4);
             }
-
-            this.mode = rb.getText();
-
-            game.run();
         });
 
         radioGroup.selectedToggleProperty().addListener((observableValue, toggle, t1) -> {
